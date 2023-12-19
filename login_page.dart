@@ -1,74 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:statefulclickcounter/app_controller.dart';
 
-class HomePage extends StatefulWidget {
+import 'home_page.dart';
+
+class LoginPage extends StatefulWidget {
   @override
-  State<HomePage> createState() {
-    return HomePageState();
-  }
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class HomePageState extends State<HomePage> {
-  int counter = 0;
+class _LoginPageState extends State<LoginPage> {
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-        actions: [
-          CustomSwitch(),
-        ],
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Contador: $counter'),
-            Container(height: 10),
-            CustomSwitch(),
-            Container(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.black,
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.black,
-                )
-              ],
-            )
-          ],
+        body: SingleChildScrollView(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                onChanged: (text) {
+                  email = text;
+                },
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    labelText: 'Email', border: OutlineInputBorder()),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                onChanged: (text) {
+                  password = text;
+                },
+                obscureText: true,
+                decoration: InputDecoration(
+                    labelText: 'Password', border: OutlineInputBorder()),
+              ),
+              SizedBox(height: 15),
+              ElevatedButton(
+                onPressed: () {
+                  if (email == 'teste@gmail.com' && password == 'teste123') {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  } else {
+                    print('Login invalido');
+                  }
+                },
+                child: Text('Entrar'),
+              )
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            counter++;
-          });
-        },
-      ),
-    );
-  }
-}
-
-class CustomSwitch extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: AppController.instance.isDartTheme,
-      onChanged: (value) {
-        AppController.instance.changeTeme();
-      },
-    );
+    ));
   }
 }
