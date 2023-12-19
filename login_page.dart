@@ -6,48 +6,53 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   String email = '';
   String password = '';
 
   @override
   Widget build(BuildContext context) {
-    return Material(  
+    return Scaffold(
+        body: SingleChildScrollView(
       child: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.width,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            onChanged: (text) {
-              print(text);
-            },
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              labelText: 'Email',
-              border: OutlineInputBorder()
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                onChanged: (text) {
+                  email = text;
+                },
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    labelText: 'Email', border: OutlineInputBorder()),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                onChanged: (text) {
+                  password = text;
+                },
+                obscureText: true,
+                decoration: InputDecoration(
+                    labelText: 'Password', border: OutlineInputBorder()),
+              ),
+              SizedBox(height: 15),
+              ElevatedButton(
+                onPressed: () {
+                  if (email == 'teste@gmail.com' && password == 'teste123') {
+                    print('correto');
+                  } else {
+                    print('Login invalido');
+                  }
+                },
+                child: Text('Entrar'),
+              )
+            ],
           ),
-
-          SizedBox(height: 10),
-          TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              border: OutlineInputBorder()
-            ),
-          ),
-          SizedBox(height: 15),
-          ElevatedButton(onPressed: () {},
-          child: Text('Entrar'),
-          )
-          ],
-         ),
         ),
       ),
-    );
+    ));
   }
 }
